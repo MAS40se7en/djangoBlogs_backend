@@ -62,6 +62,8 @@ def createBlog(request):
         )
         return Response(serializer.data)
     
+    print("Serializer errors:", serializer.errors)
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
@@ -121,6 +123,7 @@ def get_username(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_userinfo(request, username):
     User = get_user_model()
     user = User.objects.get(username=username)
